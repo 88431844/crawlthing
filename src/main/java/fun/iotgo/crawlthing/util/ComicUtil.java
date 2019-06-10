@@ -28,7 +28,7 @@ public class ComicUtil {
     return webClient;
   }
 
-  public static List<String> getList(WebClient webClient, String url) {
+  public static List<String> getList(WebClient webClient, String url,String host) {
     List<String> chapterList = new ArrayList<>();
     try {
       HtmlPage page=webClient.getPage(url);
@@ -36,7 +36,7 @@ public class ComicUtil {
       List<HtmlListItem> list = page.getByXPath("//div[@id='play_0']/ul/li");
       for (int i = 0; i < list.size(); i++) {
         HtmlListItem htmlListItem = list.get(i);
-        htmlListItem.getChildElements().forEach(l -> chapterList.add(l.getAttribute("href")));
+        htmlListItem.getChildElements().forEach(l -> chapterList.add(host+l.getAttribute("href")));
       }
     }catch (Exception e){
       e.printStackTrace();
@@ -84,7 +84,7 @@ public class ComicUtil {
   }
 
   public static void main(String[] args) {
-//    ComicUtil.getList(ComicUtil.getClient(),"http://www.chuixue.net/manhua/19736/").forEach(System.out::println);
-    System.out.println("count : "+ComicUtil.getChapterCount(ComicUtil.getClient(),"http://www.chuixue.net/manhua/19736/550557.html"));
+    ComicUtil.getList(ComicUtil.getClient(),"http://www.chuixue.net/manhua/19736/","http://www.chuixue.net").forEach(System.out::println);
+//    System.out.println("count : "+ComicUtil.getChapterCount(ComicUtil.getClient(),"http://www.chuixue.net/manhua/19736/550557.html"));
   }
 }
