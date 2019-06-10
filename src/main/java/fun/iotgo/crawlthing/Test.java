@@ -42,6 +42,6 @@ public class Test {
     // TODO Auto-generated method stub
 
     Test dw=new Test();
-    dw.saveToFile("http://chuixue1.handsl.com/2019/03/31/10/16be7d41d4.jpg");
+    dw.saveToFile("https://www.baidu.com/img/bd_logo1.png");
   }
 }
