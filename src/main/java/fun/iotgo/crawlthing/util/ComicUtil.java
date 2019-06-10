@@ -3,6 +3,7 @@ package fun.iotgo.crawlthing.util;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlListItem;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,8 +28,19 @@ public class ComicUtil {
     return webClient;
   }
 
-  public static List<String> getList(WebClient webClient, String comicUrl) {
+  public static List<String> getList(WebClient webClient, String url) {
     List<String> chapterList = new ArrayList<>();
+    try {
+      HtmlPage page=webClient.getPage(url);
+
+      List<HtmlListItem> list = page.getByXPath("//div[@id='play_0']/ul/li");
+      for (int i = 0; i < list.size(); i++) {
+        HtmlListItem htmlListItem = list.get(i);
+        htmlListItem.getChildElements().forEach(l -> chapterList.add(l.getAttribute("href")));
+      }
+    }catch (Exception e){
+      e.printStackTrace();
+    }
     return chapterList;
   }
 
@@ -58,5 +70,9 @@ public class ComicUtil {
     webClient.waitForBackgroundJavaScript(5000);//异步JS执行需要耗时,所以这里线程要阻塞5秒,等待异步JS执行结束
 
     return page.asXml();//直接将加载完成的页面转换成xml格式的字符串
+  }
+
+  public static void main(String[] args) {
+    ComicUtil.getList(ComicUtil.getClient(),"http://www.chuixue.net/manhua/19736/").forEach(System.out::println);
   }
 }
