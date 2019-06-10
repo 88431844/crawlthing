@@ -71,8 +71,20 @@ public class ComicUtil {
 
     return page.asXml();//直接将加载完成的页面转换成xml格式的字符串
   }
+  public static int getChapterCount(WebClient webClient, String chapterUrl){
+    int chapterPages = 0;
+    try {
+      HtmlPage page=webClient.getPage(chapterUrl);
+      List<HtmlListItem> list = page.getByXPath("//span[@id='selectpage2']/select/option");
+      chapterPages = list.size();
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+    return chapterPages;
+  }
 
   public static void main(String[] args) {
-    ComicUtil.getList(ComicUtil.getClient(),"http://www.chuixue.net/manhua/19736/").forEach(System.out::println);
+//    ComicUtil.getList(ComicUtil.getClient(),"http://www.chuixue.net/manhua/19736/").forEach(System.out::println);
+    System.out.println("count : "+ComicUtil.getChapterCount(ComicUtil.getClient(),"http://www.chuixue.net/manhua/19736/550557.html"));
   }
 }
