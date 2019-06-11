@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fun.iotgo.crawlthing.dao.ComicInfoMapper">
+  <resultMap id="BaseResultMap" type="fun.iotgo.crawlthing.entity.ComicInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="comicname" jdbcType="VARCHAR" property="comicname" />
+    <result column="comicchapter" jdbcType="VARCHAR" property="comicchapter" />
+    <result column="comicpage" jdbcType="VARCHAR" property="comicpage" />
+    <result column="comicimg" jdbcType="VARCHAR" property="comicimg" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, comicname, comicchapter, comicpage, comicimg
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from comicinfo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from comicinfo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="fun.iotgo.crawlthing.entity.ComicInfo">
+    insert into comicinfo (id, comicname, comicchapter, 
+      comicpage, comicimg)
+    values (#{id,jdbcType=INTEGER}, #{comicname,jdbcType=VARCHAR}, #{comicchapter,jdbcType=VARCHAR}, 
+      #{comicpage,jdbcType=VARCHAR}, #{comicimg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="fun.iotgo.crawlthing.entity.ComicInfo">
+    insert into comicinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="comicname != null">
+        comicname,
+      </if>
+      <if test="comicchapter != null">
+        comicchapter,
+      </if>
+      <if test="comicpage != null">
+        comicpage,
+      </if>
+      <if test="comicimg != null">
+        comicimg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="comicname != null">
+        #{comicname,jdbcType=VARCHAR},
+      </if>
+      <if test="comicchapter != null">
+        #{comicchapter,jdbcType=VARCHAR},
+      </if>
+      <if test="comicpage != null">
+        #{comicpage,jdbcType=VARCHAR},
+      </if>
+      <if test="comicimg != null">
+        #{comicimg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="fun.iotgo.crawlthing.entity.ComicInfo">
+    update comicinfo
+    <set>
+      <if test="comicname != null">
+        comicname = #{comicname,jdbcType=VARCHAR},
+      </if>
+      <if test="comicchapter != null">
+        comicchapter = #{comicchapter,jdbcType=VARCHAR},
+      </if>
+      <if test="comicpage != null">
+        comicpage = #{comicpage,jdbcType=VARCHAR},
+      </if>
+      <if test="comicimg != null">
+        comicimg = #{comicimg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="fun.iotgo.crawlthing.entity.ComicInfo">
+    update comicinfo
+    set comicname = #{comicname,jdbcType=VARCHAR},
+      comicchapter = #{comicchapter,jdbcType=VARCHAR},
+      comicpage = #{comicpage,jdbcType=VARCHAR},
+      comicimg = #{comicimg,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
