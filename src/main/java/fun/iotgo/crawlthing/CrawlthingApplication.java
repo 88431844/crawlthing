@@ -20,7 +20,7 @@ public class CrawlthingApplication {
   public void crawlComic(){
     String comicUrl = "http://www.chuixue.net/manhua/19736/";
     String host = "http://www.chuixue.net";
-    comicCrawl.getComic(comicUrl,host);
+    comicCrawl.getComic(comicUrl,host,303);
   }
 
 }
