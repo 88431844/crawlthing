@@ -37,6 +37,10 @@ public class ZipUtil {
   }
 
   public static void main(String[] args) {
-    ZipMultiFile("/Users/luck/code/crawlthing/src/main/resources/img/原目/295新武器","/Users/luck/code/crawlthing/src/main/resources/img/原目/295新武器.cbz");
+//    ZipMultiFile("/Users/luck/code/crawlthing/src/main/resources/img/原目/295新武器","/Users/luck/code/crawlthing/src/main/resources/img/原目/295新武器.cbz");
+    String filePath = "/Users/luck/code/crawlthing/src/main/resources/img/原目/";
+    String zipPath = "/Users/luck/code/crawlthing/src/main/resources/img/原目.cbz";
+    ZipMultiFile(filePath,zipPath);
   }
+
 }
