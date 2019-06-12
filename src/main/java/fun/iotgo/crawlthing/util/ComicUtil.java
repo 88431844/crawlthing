@@ -71,7 +71,7 @@ public class ComicUtil {
     return page.asXml() == null ? "" : page.asXml();//直接将加载完成的页面转换成xml格式的字符串
   }
 
-  public static List<ComicInfo> getComic(String chapterUrl) {
+  public static List<ComicInfo> getComic(String chapterUrl,int startFrom) {
     log.info("getComic chapterUrl : " + chapterUrl);
     List<ComicInfo> comicInfoList = new ArrayList<>();
     int comicPageSum = getChapterCount(chapterUrl);
@@ -91,6 +91,9 @@ public class ComicUtil {
       String comicPage = MyStringUtil.getStringNumber(document.getElementById("viewpagename").text());
       String comicImg = viewImg.attr("src");
 
+      if (Integer.parseInt(MyStringUtil.getStringNumber(comicChapter)) < startFrom){
+        continue;
+      }
       comicInfoList.add(
           ComicInfo.builder().comicname(comicName).comicchapter(comicChapter).comicpage(comicPage)
               .comicimg(comicImg).build());

@@ -44,12 +44,10 @@ public class ComicCrawl {
 //            c.getComicpage()+".jpg"));
 
 //TODO
-    ComicUtil.getComicChapterUrlList(comicUrl, host).forEach(chapterUrl -> ComicUtil.getComic(chapterUrl).forEach(c ->{
-      if (Integer.parseInt(MyStringUtil.getStringNumber(c.getComicchapter())) > startFrom){
+    ComicUtil.getComicChapterUrlList(comicUrl, host).forEach(chapterUrl -> ComicUtil.getComic(chapterUrl,startFrom).forEach(c ->{
         DownloadUtil.downloadFile(c.getComicimg(),
                 targetPath+c.getComicname()+"/"+c.getComicchapter()+"/",
             c.getComicpage()+".jpg");
-      }
     }));
 
     //压缩下载好的漫画，格式为cbz
