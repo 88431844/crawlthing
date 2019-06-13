@@ -31,7 +31,7 @@ public class ComicCrawl {
 
     String targetPath = OSUtil.isWin() ? winFilePath : linuxFilePath;
 
-    String targetFile = comicName+".cbz";
+    String targetFile = comicName+ "startFrom" +startFrom+".cbz";
 
 //    List<String> chapterList = ComicUtil.getComicChapterUrlList(webClient, comicUrl, host);
 //    chapterList.forEach(chapterUrl -> comicInfoMapper.insertSelective(ComicUtil.getComic(webClient,chapterUrl)));
