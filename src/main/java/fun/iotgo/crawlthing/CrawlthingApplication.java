@@ -17,11 +17,19 @@ public class CrawlthingApplication {
 
   }
   @Bean
-  public void crawlComic(){
+  public void jiemoren(){
     String comicUrl = "http://www.chuixue.net/manhua/29807/";
     String host = "http://www.chuixue.net";
     String comicName = "戒魔人";
     comicCrawl.getComic(comicUrl,host,476,comicName);
   }
+
+//  @Bean
+//  public void yuanmu(){
+//    String comicUrl = "http://www.chuixue.net/manhua/19736/";
+//    String host = "http://www.chuixue.net";
+//    String comicName = "原目";
+//    comicCrawl.getComic(comicUrl,host,303,comicName);
+//  }
 
 }
