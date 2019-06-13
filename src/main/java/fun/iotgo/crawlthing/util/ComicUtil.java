@@ -9,6 +9,7 @@ import fun.iotgo.crawlthing.entity.ComicInfo;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -60,7 +61,8 @@ public class ComicUtil {
         return "";
       }
     } catch (Exception e) {
-      e.printStackTrace();
+//      e.printStackTrace();
+      log.error("getPageXml error .........");
     }
     finally {
       webClient.close();
@@ -71,13 +73,16 @@ public class ComicUtil {
     return page.asXml() == null ? "" : page.asXml();//直接将加载完成的页面转换成xml格式的字符串
   }
 
-  public static List<ComicInfo> getComic(String chapterUrl,int startFrom) {
+  public static List<ComicInfo> getComic(String chapterUrl,int startFrom,int comicPageSum) {
     log.info("getComic chapterUrl : " + chapterUrl);
     List<ComicInfo> comicInfoList = new ArrayList<>();
-    int comicPageSum = getChapterCount(chapterUrl);
-    log.info("getComic comicPageSum : " + comicPageSum);
+
     for (int i = 0; i < comicPageSum; i++) {
-      Document document = Jsoup.parse(getPageXml(chapterUrl + "?page=" +(i + 1)));
+      String pageXml = getPageXml(chapterUrl + "?page=" +(i + 1));
+      if (StringUtils.isEmpty(pageXml)){
+        return new ArrayList<>();
+      }
+      Document document = Jsoup.parse(pageXml);
       if (null == document) {
         return new ArrayList<>();
       }
@@ -91,8 +96,11 @@ public class ComicUtil {
       String comicPage = MyStringUtil.getStringNumber(document.getElementById("viewpagename").text());
       String comicImg = viewImg.attr("src");
 
-      if (Integer.parseInt(MyStringUtil.getStringNumber(comicChapter)) < startFrom){
-        continue;
+      //零则说明是单独章节下载
+      if (0 != startFrom){
+        if (Integer.parseInt(MyStringUtil.getStringNumber(comicChapter)) < startFrom){
+          continue;
+        }
       }
       comicInfoList.add(
           ComicInfo.builder().comicname(comicName).comicchapter(comicChapter).comicpage(comicPage)
@@ -102,7 +110,7 @@ public class ComicUtil {
     return comicInfoList;
   }
 
-  private static int getChapterCount(String chapterUrl) {
+  public static int getChapterCount(String chapterUrl) {
     WebClient webClient = ComicUtil.getClient();
     int chapterPages = 0;
     try {
