@@ -23,14 +23,15 @@ public class ComicCrawl {
    * 4.下载每一话图片以 漫画名称/章节 结构存储图片
    * 5.压缩下载后的漫画，并改后缀名为cbz
    */
-  public void getComic(String comicUrl, String host,int startFrom) {
+  public void getComic(String comicUrl, String host,int startFrom,String comicName) {
+
     String winFilePath = "D:\\code\\crawlthing\\src\\main\\resources\\img\\";
     String linuxFilePath = "/Users/luck/code/crawlthing/src/main/resources/img/";
-    String filePath = OSUtil.isWin() ? winFilePath + "原目\\" : linuxFilePath + "原目/";
+    String filePath = OSUtil.isWin() ? winFilePath + comicName+"\\" : linuxFilePath +comicName +"/";
 
     String targetPath = OSUtil.isWin() ? winFilePath : linuxFilePath;
 
-    String targetFile = "原目.cbz";
+    String targetFile = comicName+".cbz";
 
 //    List<String> chapterList = ComicUtil.getComicChapterUrlList(webClient, comicUrl, host);
 //    chapterList.forEach(chapterUrl -> comicInfoMapper.insertSelective(ComicUtil.getComic(webClient,chapterUrl)));

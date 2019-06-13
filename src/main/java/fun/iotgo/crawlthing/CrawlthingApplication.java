@@ -18,9 +18,10 @@ public class CrawlthingApplication {
   }
   @Bean
   public void crawlComic(){
-    String comicUrl = "http://www.chuixue.net/manhua/19736/";
+    String comicUrl = "http://www.chuixue.net/manhua/29807/";
     String host = "http://www.chuixue.net";
-    comicCrawl.getComic(comicUrl,host,303);
+    String comicName = "戒魔人";
+    comicCrawl.getComic(comicUrl,host,476,comicName);
   }
 
 }
