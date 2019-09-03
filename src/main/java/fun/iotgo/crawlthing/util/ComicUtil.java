@@ -17,7 +17,7 @@ import org.jsoup.select.Elements;
 @Slf4j
 public class ComicUtil {
 
-  public static WebClient getClient() {
+  private static WebClient getClient() {
     //新建一个模拟谷歌Chrome浏览器的浏览器客户端对象
     final WebClient webClient = new WebClient(BrowserVersion.CHROME);
 
@@ -38,10 +38,9 @@ public class ComicUtil {
       HtmlPage page = webClient.getPage(url);
 
       List<HtmlListItem> list = page.getByXPath("//div[@id='play_0']/ul/li");
-      for (int i = 0; i < list.size(); i++) {
-        HtmlListItem htmlListItem = list.get(i);
+      for (HtmlListItem htmlListItem : list) {
         htmlListItem.getChildElements()
-            .forEach(l -> chapterList.add(host + l.getAttribute("href")));
+                .forEach(l -> chapterList.add(host + l.getAttribute("href")));
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -115,7 +114,9 @@ public class ComicUtil {
     int chapterPages = 0;
     try {
       HtmlPage page = webClient.getPage(chapterUrl);
-      List<HtmlListItem> list = page.getByXPath("//span[@id='selectpage2']/select/option");
+//      List<HtmlListItem> list = page.getByXPath("//span[@id='selectpage2']/select/option");
+      List<HtmlListItem> list = page.getByXPath("//span[@id='manga-page']");
+
       chapterPages = list.size();
     } catch (Exception e) {
       e.printStackTrace();
@@ -126,5 +127,6 @@ public class ComicUtil {
   public static void main(String[] args) {
 //    ComicUtil.getList(ComicUtil.getClient(),"http://www.chuixue.net/manhua/19736/","http://www.chuixue.net").forEach(System.out::println);
 //    System.out.println("count : "+ComicUtil.getChapterCount(ComicUtil.getClient(),"http://www.chuixue.net/manhua/19736/550557.html"));
+    System.out.println("-----------:"+ComicUtil.getChapterCount("http://m.pufei.net/manhua/196/215224.html"));
   }
 }
